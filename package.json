@@ -1,0 +1,19 @@
+{
+  "name": "nko3-shadowlamp",
+  "version": "0.0.0",
+  "description": "Shadowlamp",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:nko3/shadowlamp.git"
+  },
+  "dependencies": {
+  },
+  "engines": {
+    "node": "0.8.x"
+  },
+  "subdomain": "shadowlamp.nko3"
+}
