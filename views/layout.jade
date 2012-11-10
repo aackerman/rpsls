@@ -5,10 +5,8 @@ html(lang="en")
 		title RPSLS
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		script(src='//code.jquery.com/jquery.min.js')
-		script(src='/js/main.js')
-		script(src='/js/lodash.min.js')
 		script(src='/socket.io/socket.io.js')
 		link(href='/css/style.css', rel='stylesheet')
 	body
 		block content
+		script(src='/js/require.js', data-main='/js/main')
