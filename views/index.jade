@@ -15,8 +15,18 @@ block content
 				img(src="/img/lizard.png")
 			div.main-img.rfloat
 					img(src="/img/rock.png")
-	div.row
-		p Chat
+	div.row.span-half.nbcf
+		p Smack Talk
 		div#chat
 		div.chat-input
 			input(type='text', name='chat')
+	div.row.span-half.nbcf
+		p Players
+		div#players
+	div.overlay.nick-overlay
+		div.overlay-bg
+		div.overlay-content
+			button.btn.quick-start Quick Start
+			button.btn.login-start Login with Twitter
+			input(type='text', name='nickname', placeholder='nickname')
+			button.btn.start start

@@ -1,6 +1,8 @@
 @import 'normalize';
 @import 'mixins';
 @import 'utils';
+@import 'forms';
+@import 'overlay';
 
 * {
 	@include box-sizing;
@@ -21,8 +23,18 @@ header {
 	background: #555;
 }
 
-.content {
-	
+.btn {
+	@include btn-base;
+	@include background-gradient(#FFFFFF, #DFDFDF);
+
+	&:hover {
+		background: #EFEFEF;
+		@include background-gradient(#FFFFFF, darken(#EFEFEF, 10%));
+	}
+
+	&:active {
+		@include background-gradient(darken(#FFFFFF, 10%), darken(#EFEFEF, 10%));
+	}
 }
 
 .main-img img {
@@ -38,10 +50,33 @@ header {
 	}
 
 	&:hover {
+		z-index: 1000;
 		width: 180px;
 		height: 180px;
 		top: -35px;
 		left: -35px;
+	}
+}
+
+.span-half {
+	float: left;
+	display: inline-block;
+	margin-left: 1%;
+	width: 49%;
+
+	&:first-child {
+		margin: 0;
+	}
+}
+
+.span-third {
+	float: left;
+	display: inline-block;
+	margin-left: 1%;
+	width: 32%;
+
+	&:first-child {
+		margin: 0;
 	}
 }
 
@@ -52,15 +87,35 @@ header {
 }
 
 .first {
-	margin: 60px auto 30px;
+	@media (min-width: 480px) {
+		margin: 20px auto 30px;
+	}
+
+	@media (max-width: 480px) {
+		margin: 20px auto -30px;
+	}
 }
 
 .second {
-	width: 500px;
-	margin: 30px auto 90px;
+	@media (min-width: 480px) {
+		width: 500px;
+		margin: 30px auto 90px;
+	}
+
+	@media (max-width: 480px) {
+		width: 300px;
+		margin: 0 auto;
+	}
 }
 
 .third {
-	width: 350px;
-	margin: 60px auto 30px;
+	@media (min-width: 480px) {
+		width: 350px;
+		margin: 60px auto 30px;
+	}
+
+	@media (max-width: 480px) {
+		width: 230px;
+		margin: 0 auto 30px;
+	}
 }

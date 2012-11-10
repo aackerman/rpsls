@@ -32,6 +32,12 @@
   transition-duration: $t; 
 }
 
+@mixin box-shadow($p) {
+  -webkit-box-shadow: $p;
+  -moz-box-shadow: $p;
+  box-shadow: $p;
+}
+
 @mixin btn-base {
   padding: 4px 8px;
   font-size: 12px;
@@ -52,4 +58,14 @@
   &:hover {
     text-decoration: none;
   }
+}
+
+@mixin background-gradient($color-top, $color-bottom) {
+  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0 startColorstr='#{ie-hex-str($color-top)}', endColorstr='#{ie-hex-str($color-bottom)}');
+  background-image: -o-linear-gradient(top, $color-top 0, $color-bottom 100%);
+  background-image: -ms-linear-gradient(top, $color-top 0, $color-bottom 100%);
+  background-image: -webkit-linear-gradient(top, $color-top, $color-bottom);
+  background-image: -webkit-gradient(linear, left top, left bottom, from($color-top), to($color-bottom));
+  background-image: -moz-linear-gradient(top, $color-top, $color-bottom);
+  background-image: linear-gradient(top, $color-top, $color-bottom);
 }

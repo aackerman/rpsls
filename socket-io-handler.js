@@ -1,41 +1,41 @@
-var rooms = [
-	'Slithering Lizards',
-	'Paper Mache Playground',
-	'Rock Hard Smashers',
-	'Cut Cut Cut Cut Cut Cut Cut',
-	'Logical Exports'
-];
+var games = [];
+var usernames = {};
 
 module.exports = function(io) {
 
 	io.sockets.on('connection', function(socket){
 
-		socket.on('entrance', function(nick, room){
-			// set the users nickname
-			socket.nick = nick;
+		// send the player connecting all the other known players
+		socket.emit('/players', usernames);
 
-			// set the users room
-			// @todo only use valid rooms
-			socket.room = room;
+		// the user picked a name
+		socket.on('/entrance', function(nick){
+			usernames[socket.id] = {
+				nick: nick,
+				id: socket.id
+			};
 
-			// set the user to join the room
-			socket.join(socket.room);
-
-			// update chat for the user
-			socket.emit('/update/chat', 'Connected to room ' + socket.room);
-
-			// update chat for all other users
-			socket.broadcast.to(socket.room).emit('/update/chat', socket.nick + ' just walked in');
-
-			// update rooms for the user
-			socket.emit('/update/rooms', rooms, socket.room);
+			// tell all the players there is a new player to challenge
+			io.sockets.emit('/add/player', usernames[socket.id]);
 		});
 
+		// somebody sent a message
 		socket.on('/update/chat', function(text){
-			socket.broadcast.to(socket.room).emit('/update/chat', text);
+			io.sockets.emit('/update/chat', usernames[socket.id], text);
 		});
 
-		// broadcast to the room that another person has joined
+		// somebody wants to challenge another player
+		socket.on('/challenge', function(id){
+
+		});
+
+		// somebody disconnected
+		socket.on('disconnect', function(){
+			if(usernames[socket.id]) {
+				io.sockets.emit('/remove/player', usernames[socket.id]);
+				delete usernames[socket.id];
+			}
+		});
 	});
 
 };

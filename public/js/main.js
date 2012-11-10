@@ -37,19 +37,48 @@ $(document).ready(function(){
 
 	var socket = io.connect();
 
-	socket.emit('entrance', 'Ron', 'Slithering Lizards');
+	socket.on('/update/chat', function(user, msg){
+		$('#chat').append('<p>'+user.nick+': '+msg+'</p>');
+	});
 
-	socket.on('/update/chat', function(m){
-		$('#chat').append('<p>'+m+'</p>');
+	socket.on('/add/player', function(p){
+		$('#players').append('<p data-id="'+p.id+'">'+p.nick+'</p>');
+	});
+
+	socket.on('/players', function(players){
+		$.each(players, function(k, p){
+			$('#players').append('<p data-id="'+p.id+'">'+p.nick+'</p>');
+		});
+	});
+
+	socket.on('/remove/player', function(p){
+		$('[data-id='+p.id+']').remove();
 	});
 
 	$('[name=chat]').on('keyup', function(e){
 		if(e.which == 13) {
 			var text = $(this).val();
-			$('#chat').append('<p>'+text+'</p>');
 			$(this).val('');
 			socket.emit('/update/chat', text);
 		}
+	});
+
+	var setNickname = function(e) {
+		var nick = $('[name=nickname]').val();
+		if(nick.length) {
+			$('.nick-overlay').hide();
+			socket.emit('/entrance', nick);
+		}
+	};
+
+	// emit the player is ready to start
+	$('.start').on('click', setNickname);
+	$('[name=nickname]').on('keyup', function(e){
+		if(e.which == 13) setNickname();
+	});
+
+	$('.challenge').on('click', function(e){
+		socket.emit('/challenge', $(this).attr('data-id'));
 	});
 
 	$('.main-img img').on('click', function(e){
