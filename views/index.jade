@@ -5,22 +5,25 @@ block content
 	div.row.relative
 		div.row.first.center
 			div.main-img.scissors
-				img(src="/img/scissors.png", data-selection='scissors')
+				img.selection-img(src="/img/scissors.png", data-selection='scissors')
 		div.row.second
 			div.main-img.lfloat
-				img(src="/img/spock.png", data-selection='spock')
+				img.selection-img(src="/img/spock.png", data-selection='spock')
 			div.main-img.rfloat
-				img(src="/img/paper.png", data-selection='paper')
+				img.selection-img(src="/img/paper.png", data-selection='paper')
 		div.row.third
 			div.main-img.lfloat
-				img(src="/img/lizard.png", data-selection='lizard')
+				img.selection-img(src="/img/lizard.png", data-selection='lizard')
 			div.main-img.rfloat
-					img(src="/img/rock.png", data-selection='rock')
+					img.selection-img(src="/img/rock.png", data-selection='rock')
 	div.selection.hide
 				button.btn.lock-btn Lock In
 	div.startup.center
 		button.btn-large.login-start Login with Twitter
-		button.btn-large.quick-start Quick Start	
+		button.btn-large.quick-start Quick Start
+	div.module-box.quick-nick.hide
+		p Nickname
+		input(type='text', name='nickname')
 	div.info-output.hide
 		div.module-box.row.span-half.nbcf
 			p Smack Talk
