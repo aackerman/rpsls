@@ -13,6 +13,7 @@ app.configure(function(){
   app.use(express.session({secret: 'haxzorz'}));
   app.set('views', __dirname + '/views');
   app.set('view engine', 'jade');
+  app.set('port', 80);
 });
 
 process.on('uncaughtException', function(err){
@@ -25,5 +26,5 @@ process.on('uncaughtException', function(err){
 require('./routes')(app);
 
 //explode server
-app.listen(8080);
-console.log('server running on port 8080');
+app.listen(app.get('port'));
+console.log('server running on port ' + app.get('port'));
