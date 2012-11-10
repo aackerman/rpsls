@@ -1,15 +1,19 @@
 define([
+	'lodash',
 	'utils'
 ], function(
+	_,
 	utils
 ){
+	var self;
 	var RPSLS = function() {
 		this.$el = $('body');
+		this.players = [];
 		this.socket = io.connect();
 		utils.eventDelegation.call(this);
+		utils.socketEventDelegation.call(this);
+		this.socket.emit('/ready');
 	};
-
-	var self;
 
 	RPSLS.prototype = {
 
@@ -22,6 +26,13 @@ define([
 			'.quick-start click': 'quickstart'
 		},
 
+		socketEvents: {
+			'/players': 'bootstrapPlayers',
+			'/update/chat': 'updateChat',
+			'/add/player': 'addPlayer',
+			'/remove/player': 'removePlayer'
+		},
+
 		outcomes : {
 			'rock': ['scissors', 'lizard'],
 			'lizard': ['spock', 'paper'],
@@ -32,6 +43,7 @@ define([
 		
 		player: {
 			nick: 'Ron',
+			type: 'self',
 			selection: ''
 		},
 		
@@ -56,7 +68,6 @@ define([
 		$chat: $('[name=chat]'),
 		
 		resolve: function(p1, p2) {
-			console.log(self, p1, p2);
 			var ps1 = self.outcomes[p1.selection][0];
 			var ps2 = self.outcomes[p1.selection][1];
 			console.log(p1.nick + ' selected ' + p1.selection, p2.nick + ' selected ' + p2.selection);
@@ -75,7 +86,7 @@ define([
 		},
 
 		challenge: function(e) {
-			self.socket.emit('/challenge', $(this).attr('data-id'));
+			self.socket.emit('/challenge', $(e.currentTarget).attr('data-id'));
 		},
 
 		quickstart: function(e) {
@@ -100,6 +111,24 @@ define([
 			}
 		},
 
+		bootstrapPlayers: function(players){
+			console.log('bootstrapPlayers', players);
+			$.each(players, function(k, p){
+				self.addPlayer(p);
+			});
+		},
+
+		addPlayer: function(p) {
+			console.log('addPlayer', p);
+			var tpl = _.template('<p data-id="<%= id%>"><%= nick%>', p);
+					tpl += _.template('<button class="btn rfloat challenge" data-id="<%= id%>">Challenge</button></p>', p);
+			$('#players').append(tpl);
+		},
+
+		updateChat: function(user, msg) {
+			$('#chat').append('<p>'+user.nick+': '+msg+'</p>');
+		},
+
 		select: function(e) {
 			var $t = $(e.currentTarget);
 			var selection = $t.attr('data-selection');
@@ -108,6 +137,10 @@ define([
 			$t.toggleClass('active');
 			$('.selection').show();
 			$('.lock-btn').html(tpl);
+		},
+
+		removePlayer: function(p) {
+			$('[data-id='+p.id+']').remove();
 		},
 
 		lockin: function(e) {

@@ -5,18 +5,20 @@ module.exports = function(io) {
 
 	io.sockets.on('connection', function(socket){
 
-		// send the player connecting all the other known players
-		socket.emit('/players', usernames);
-
+		socket.on('/ready', function(){
+			socket.emit('/players', usernames);
+		});
+		
 		// the user picked a name
 		socket.on('/entrance', function(nick){
+
 			usernames[socket.id] = {
 				nick: nick,
 				id: socket.id
 			};
 
 			// tell all the players there is a new player to challenge
-			io.sockets.emit('/add/player', usernames[socket.id]);
+			socket.broadcast.emit('/add/player', usernames[socket.id]);
 		});
 
 		// somebody sent a message

@@ -1,18 +1,23 @@
 //import modules
-var express     = require('express')
-	, RedisStore  = require('connect-redis')(express)
-  , consolidate	= require('consolidate')
-  , io = require('socket.io');
+var express = require('express')
+  , redis = require('redis')
+  , socketio = require('socket.io');
 
 //create server
 var app = express()
 	, server = require('http').createServer(app)
-  , io = io.listen(server);
+  , ioserver = socketio.listen(server);
 
-io.configure(function () {
-  io.set('transports', ['websocket', 'xhr-polling']);
-  io.enable('log');
+ioserver.configure(function () {
+  ioserver.set('transports', ['websocket', 'xhr-polling']);
+  ioserver.enable('log');
 });
+
+ioserver.set('store', new socketio.RedisStore({
+  redisPub: redis.createClient(),
+  redisSub: redis.createClient(),
+  redisClient: redis.createClient()
+}));
 
 //setup express middleware
 app.configure(function(){
@@ -32,7 +37,7 @@ process.on('uncaughtException', function(err){
 });
 
 // handle socket-io
-require('./socket-io-handler')(io);
+require('./socket-io-handler')(ioserver);
 
 //import routes
 require('./routes')(app);

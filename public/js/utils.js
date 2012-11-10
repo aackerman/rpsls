@@ -21,6 +21,19 @@ define([
 					this.$el.on(selector, eventName, method);
 				}
 			}
+		},
+
+		socketEventDelegation: function() {
+			var events = this.socketEvents;
+			if(!events) return;
+			for (var key in events) {
+				var eventName = key;
+				var method = events[key];
+				if (!$.isFunction(method)) method = this[events[key]];
+				if (!method) throw new Error('Method "' + events[key] + '" does not exist');
+				method = $.proxy(method, this);
+				this.socket.on(eventName, method);
+			}
 		}
 	};
 });

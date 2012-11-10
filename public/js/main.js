@@ -3,12 +3,10 @@ require.config({
 	paths: {
 		'jquery': '//code.jquery.com/jquery.min',
 		'RPSLS': 'rpsls',
-		'setup': 'setup',
 		'lodash': 'lodash'
 	},
 	include: [
-		'RPSLS',
-		'setup'
+		'RPSLS'
 	],
 	out: 'main-build.js'
 });
