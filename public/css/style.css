@@ -313,8 +313,7 @@ table {
   border-spacing: 0; }
 
 .hide {
-  display: none;
-  visibility: hidden; }
+  display: none; }
 
 .strong {
   font-weight: bold; }
@@ -434,7 +433,11 @@ input[type=password] {
 
 body {
   color: #fff;
-  background: #585D95; }
+  background-image: url(/img/bg.png); }
+
+p {
+  margin-top: 0;
+  margin-bottom: 3px; }
 
 h1 {
   margin-top: 0; }
@@ -528,7 +531,42 @@ header {
 .main-img {
   width: 110px;
   height: 110px;
-  margin: 0 auto; }
+  margin: 0 auto;
+  display: inline-block; }
+
+.module-box {
+  color: #333;
+  padding: 10px;
+  border: 1px solid #DDD;
+  border-bottom: solid 1px #CCC;
+  border-radius: 6px;
+  background: #FEFEFE;
+  filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0 startColorstr='#FFEFEFEF', endColorstr='#FFD5D5D5');
+  background-image: -o-linear-gradient(top, #efefef 0, #d5d5d5 100%);
+  background-image: -ms-linear-gradient(top, #efefef 0, #d5d5d5 100%);
+  background-image: -webkit-linear-gradient(top, #efefef, #d5d5d5);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#efefef), to(#d5d5d5));
+  background-image: -moz-linear-gradient(top, #efefef, #d5d5d5);
+  background-image: linear-gradient(top, #efefef, #d5d5d5);
+  -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.3); }
+  .module-box input {
+    width: 100%; }
+
+.align-middle {
+  vertical-align: middle;
+  display: inline-block;
+  height: 110px; }
+
+.selection {
+  margin: 0 auto 10px;
+  text-align: center; }
+
+@media (min-width: 480px) {
+  .info-output {
+    width: 480px;
+    margin: 0 auto; } }
 
 @media (min-width: 480px) {
   .first {
@@ -539,7 +577,7 @@ header {
 
 @media (min-width: 480px) {
   .second {
-    width: 500px;
+    width: 480px;
     margin: 30px auto 90px; } }
 @media (max-width: 480px) {
   .second {
@@ -548,7 +586,7 @@ header {
 
 @media (min-width: 480px) {
   .third {
-    width: 350px;
+    width: 360px;
     margin: 60px auto 30px; } }
 @media (max-width: 480px) {
   .third {

@@ -1,39 +1,8 @@
-var Session = function() {
-	this.games = 0;
-};
-
-Session.prototype.start = function() {
-};
-
-var Game = function(){};
-
-Game.prototype.start = function(){
-
-};
-
-Game.prototype.reset = function() {
-	this.games = 0;
-};
-
-Game.prototype.addPlayer = function(p) {
-	this.players.push(p);
-};
-
-var Player = function() {
-	this.name = 'Player';
-	this.wins = 0;
-	this.losses = 0;
-	this.draws = 0;
-	this.selection = null;
-	this.lockedIn = false;
-};
-
-Player.prototype.lockin = function(s) {
-	this.selection = s;
-	this.lockedIn = true;
-};
-
 $(document).ready(function(){
+
+	var player = {
+		selection: {}
+	};
 
 	var socket = io.connect();
 
@@ -84,5 +53,10 @@ $(document).ready(function(){
 	$('.main-img img').on('click', function(e){
 		$('.main-img img').removeClass('active');
 		$(this).toggleClass('active');
+		$('.selection').show();
+	});
+
+	$('.lock-btn').on('click', function(e){
+
 	});
 });

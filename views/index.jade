@@ -15,15 +15,18 @@ block content
 				img(src="/img/lizard.png")
 			div.main-img.rfloat
 					img(src="/img/rock.png")
-	div.row.span-half.nbcf
-		p Smack Talk
-		div#chat
-		div.chat-input
-			input(type='text', name='chat')
-	div.row.span-half.nbcf
-		p Players
-		div#players
-	div.overlay.nick-overlay
+	div.selection.hide
+				button.btn.lock-btn Lock In
+	div.info-output
+		div.module-box.row.span-half.nbcf
+			p Smack Talk
+			div#chat
+			div.chat-input
+				input(type='text', name='chat')
+		div.module-box.row.span-half.nbcf
+			p Players
+			div#players
+	div.overlay.nick-overlay.hide
 		div.overlay-bg
 		div.overlay-content
 			button.btn.quick-start Quick Start
