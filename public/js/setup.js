@@ -1,9 +1,11 @@
 define([
 	'RPSLS',
-	'jquery'
+	'jquery',
+	'lodash'
 ], function(
 	RPSLS,
-	$
+	$,
+	_
 ){
 
 	RPSLS.socket.on('/update/chat', function(user, msg){
@@ -61,10 +63,7 @@ define([
 	});
 
 	$('.lock-btn').on('click', function(e){
-		var r = _.random(0, 4);
-		player.selection = $('img.active').attr('data-selection');
-		bot.selection = options[r];
-		resolve(player, bot);
+		RPSLS.lockin();
 	});
 	
 });

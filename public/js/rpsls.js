@@ -12,12 +12,12 @@ define(function(){
 		},
 		
 		player: {
-			nick: '',
+			nick: 'Ron',
 			selection: ''
 		},
 		
 		challenger: {
-			nick: 'bot',
+			nick: 'Bot',
 			selection: '',
 			options: [
 					'rock'
@@ -29,8 +29,8 @@ define(function(){
 		},
 		
 		resolve: function(p1, p2) {
-			var ps1 = outcomes[p1.selection][0];
-			var ps2 = outcomes[p1.selection][1];
+			var ps1 = this.outcomes[p1.selection][0];
+			var ps2 = this.outcomes[p1.selection][1];
 			console.log(p1.nick + ' selected ' + p1.selection, p2.nick + ' selected ' + p2.selection);
 			if(p1.selection == p2.selection) {
 				console.log('Tie!');
@@ -44,6 +44,19 @@ define(function(){
 					console.log(p2.nick + ' wins!');
 				}
 			}
+		},
+
+		lockin: function() {
+			var r = _.random(0, 4);
+			var p1 = this.player;
+			var p2 = this.challenger;
+			p1.selection = $('img.active').attr('data-selection');
+			if(p2.nick == 'Bot') {
+				p2.selection = p2.options[r];
+			} else {
+
+			}
+			this.resolve(p1, p2);
 		}
 
 	};
