@@ -18,3 +18,26 @@ input[type=password] {
 		outline: none;
 	}
 }
+
+[class*=btn] {
+	@include btn-base;
+	@include background-gradient(#FFFFFF, #DFDFDF);
+
+	& + [class*=btn] {
+		margin-left: 5px;
+	}
+
+	&:hover {
+		background: #EFEFEF;
+		@include background-gradient(#FFFFFF, darken(#FFFFFF, 20%));
+	}
+
+	&:active {
+		@include background-gradient(darken(#FFFFFF, 10%), darken(#EFEFEF, 10%));
+	}
+}
+
+.btn-large {
+	font-size: 16px;
+	padding: 8px 16px;
+}

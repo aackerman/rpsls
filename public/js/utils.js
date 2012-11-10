@@ -34,6 +34,21 @@ define([
 				method = $.proxy(method, this);
 				this.socket.on(eventName, method);
 			}
+		},
+
+		message: function(msg) {
+			console.log('create message');
+			var seconds = 30;
+			var $msg = $('.message-queue').append('<div class="message">'+msg+'</div>');
+			var $timer = $msg.find('.timer');
+			var timeout = setInterval(function(){
+				seconds--;
+				$timer.html(seconds + 's');
+			}, 1000);
+			setTimeout(function(){
+				clearInterval(timeout);
+				$msg.remove();
+			}, 31000);
 		}
 	};
 });

@@ -1,35 +1,40 @@
 extends layout
 
 block content
-	h1.center Rock<br/>Paper Scissors<br/>Lizard Spock
-	div.row.relative
-		div.row.first.center
-			div.main-img.scissors
-				img.selection-img(src="/img/scissors.png", data-selection='scissors')
-		div.row.second
-			div.main-img.lfloat
-				img.selection-img(src="/img/spock.png", data-selection='spock')
-			div.main-img.rfloat
-				img.selection-img(src="/img/paper.png", data-selection='paper')
-		div.row.third
-			div.main-img.lfloat
-				img.selection-img(src="/img/lizard.png", data-selection='lizard')
-			div.main-img.rfloat
-					img.selection-img(src="/img/rock.png", data-selection='rock')
-	div.selection.hide
-				button.btn.lock-btn Lock In
-	div.startup.center
-		//button.btn-large.login-start Login with Twitter
-		button.btn-large.quick-start Quick Start
-	div.module-box.quick-nick.hide
-		p Nickname
-		input(type='text', name='nickname')
-	div.info-output.hide
-		div.module-box.row.span-half.nbcf
-			p Smack Talk
-			div#chat
-			div.chat-input
-				input(type='text', name='chat')
-		div.module-box.row.span-half.nbcf
-			p Players
-			div#players
+	div.main-content
+		h1.center Rock<br/>Paper Scissors<br/>Lizard Spock
+		div.message-queue
+		div.challenge-container.row.relative
+			div.row.first.center
+				div.main-img.scissors
+					img.selection-img(src="/img/scissors.png", data-selection='scissors')
+			div.row.second
+				div.main-img.lfloat
+					img.selection-img(src="/img/spock.png", data-selection='spock')
+				div.main-img.rfloat
+					img.selection-img(src="/img/paper.png", data-selection='paper')
+			div.row.third
+				div.main-img.lfloat
+					img.selection-img(src="/img/lizard.png", data-selection='lizard')
+				div.main-img.rfloat
+						img.selection-img(src="/img/rock.png", data-selection='rock')
+		div.selection.center
+					button.btn-large.hide.lock-btn Lock In
+	div.content-flair
+	div.secondary-content
+		div.startup.center
+			//button.btn-large.login-start Login with Twitter
+			button.btn-large.quick-start Quick Start
+		div.module-box.quick-nick.hide
+			p Nickname
+			input(type='text', name='nickname')
+		div.info-output.hide
+			//div.module-box.row.span-half.nbcf
+				p Smack Talk
+				div#chat
+				div.chat-input
+					input(type='text', name='chat')
+			div.module-box.row.nickname
+			div.module-box.row.nbcf
+				p Players
+				div#players

@@ -1,8 +1,9 @@
 @import 'normalize';
 @import 'mixins';
-@import 'utils';
 @import 'forms';
+@import 'message';
 @import 'overlay';
+@import 'utils';
 
 * {
 	@include box-sizing;
@@ -10,12 +11,30 @@
 
 body {
 	color: #fff;
-	//background: #585D95;
-	background-image: url(/img/bg.png);
+	background-image: url(/img/bg2.png);
+}
 
-	@media (max-width: 480px) {
-		padding: 0 20px;
+h1 {
+	margin-top: 0;
+	padding-top: 20px;
+}
+
+.main-content {
+	padding: 20px;
+	background-image: url(/img/bg.png);
+}
+
+.secondary-content {
+	margin: 0 auto;
+	padding: 20px;
+	@media (min-width: 480px) {
+		width: 480px;
 	}
+}
+
+.content-flair {
+	height: 20px;
+	@include background-gradient(#333, rgba(255, 255, 255, 0));
 }
 
 p {
@@ -27,29 +46,6 @@ header {
 	padding: 75px;
 	height: 200px;
 	background: #555;
-}
-
-[class*=btn] {
-	@include btn-base;
-	@include background-gradient(#FFFFFF, #DFDFDF);
-
-	& + [class*=btn] {
-		margin-left: 5px;
-	}
-
-	&:hover {
-		background: #EFEFEF;
-		@include background-gradient(#FFFFFF, darken(#FFFFFF, 20%));
-	}
-
-	&:active {
-		@include background-gradient(darken(#FFFFFF, 10%), darken(#EFEFEF, 10%));
-	}
-}
-
-.btn-large {
-	font-size: 16px;
-	padding: 8px 16px;
 }
 
 .main-img img {
@@ -105,11 +101,10 @@ header {
 .module-box {
 	color: #333;
 	padding: 10px;
-  border: 1px solid #DDD;
-	border-bottom: solid 1px #CCC;
+  border: 1px solid #CCC;
+  margin-bottom: 10px;
 	border-radius: 3px;
-	background: #FEFEFE;
-	@include background-gradient(#FFFFFF, darken(#FFFFFF, 30%));
+	background: #EFEFEF;
 	@include box-shadow(0 1px 0 rgba(0,0,0,.3));
 
 	input {
@@ -117,15 +112,17 @@ header {
 	}
 }
 
+.player-row {
+	margin-bottom: 10px;
+}
+
 .align-middle {
 	vertical-align: middle;
 	display: inline-block;
-	height: 110px;
 }
 
 .selection {
-	margin: 0 auto 10px;
-	text-align: center;
+	height: 36px;
 }
 
 .info-output {
