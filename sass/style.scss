@@ -1,0 +1,40 @@
+@import 'normalize';
+@import 'mixins';
+@import 'utils';
+
+* {
+	@include box-sizing;
+}
+
+body {
+	color: #fff;
+	background: #585D95;
+}
+
+h1 {
+	margin-top: 0;
+}
+
+header {
+	padding: 75px;
+	height: 200px;
+	background: #555;
+}
+
+.content {
+	
+}
+
+.first {
+	margin: 60px auto 30px;
+}
+
+.second {
+	width: 500px;
+	margin: 30px auto 90px;
+}
+
+.third {
+	width: 350px;
+	margin: 60px auto 30px;
+}

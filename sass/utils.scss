@@ -1,0 +1,66 @@
+.hide {
+	display: none;
+	visibility: hidden;
+}
+
+.strong {
+	font-weight: bold;
+}
+
+.center {
+	text-align: center;
+}
+
+.ellipsis {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+.rfloat {
+	float: right;
+}
+
+.lfloat {
+	float: left;
+}
+
+.relative {
+	position: relative;
+}
+
+.absolute {
+	position: absolute;
+}
+
+.block {
+	display: block !important;
+}
+
+.inline {
+	display: inline !important;
+}
+
+.inline-block {
+	display: inline-block !important;
+}
+
+.no-spacing {
+	margin: 0;
+	padding: 0;
+}
+
+.unstyled-list {
+	padding: 0;
+	list-style: none;
+}
+
+.nbcf {
+	overflow: hidden;
+}
+
+.row,
+.container {
+	width: 100%;
+	@include clearfix;
+}

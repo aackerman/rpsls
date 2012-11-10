@@ -1,5 +1,19 @@
 extends layout
 
 block content
-	header 
+	header.row 
 		h1 Rock, Paper, Scissors, Lizard, Spock
+	div.row.relative
+		div.row.first.center
+			div.scissors
+				img(src="/img/scissors.png")
+		div.row.second
+			div.lfloat
+				img(src="/img/spock.png")
+			div.rfloat
+				img(src="/img/paper.png")
+		div.row.third
+			div.lfloat
+				img(src="/img/lizard.png")
+			div.rfloat
+					img(src="/img/rock.png")

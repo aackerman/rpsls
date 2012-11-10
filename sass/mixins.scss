@@ -1,0 +1,41 @@
+@mixin box-sizing {
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+@mixin clearfix {
+  zoom: 1;
+
+  &::before, &::after {
+    display: table;
+    content: "";
+    zoom: 1;
+  }
+
+  &::after {
+    clear: both;
+  }
+}
+
+@mixin btn-base {
+  padding: 4px 8px;
+  font-size: 12px;
+  border-radius: 3px;
+  zoom: 1;
+  overflow: hidden;
+  text-align: center;
+  vertical-align: middle;
+  border-collapse: separate;
+  border-image: initial;
+  display: inline-block;
+  cursor: pointer;
+  border: 1px solid #C5C5C5;
+  border-color: rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.15) rgba(0, 0, 0, 0.25);
+  text-decoration: none;
+  background-repeat: repeat-x;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
