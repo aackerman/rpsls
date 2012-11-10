@@ -18,6 +18,20 @@
   }
 }
 
+@mixin transition-prop($props...) {
+  -webkit-transition-property: $props;
+  -moz-transition-property: $props;
+  -o-transition-property: $props;
+  transition-property: $props;
+}
+
+@mixin transition-duration($t) {
+  -webkit-transition-duration: $t;
+  -moz-transition-duration: $t;
+  -o-transition-duration: $t;
+  transition-duration: $t; 
+}
+
 @mixin btn-base {
   padding: 4px 8px;
   font-size: 12px;

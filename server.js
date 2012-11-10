@@ -1,10 +1,18 @@
 //import modules
-var express     = require('express'),
-    RedisStore  = require('connect-redis')(express),
-    consolidate	= require('consolidate');
+var express     = require('express')
+	, RedisStore  = require('connect-redis')(express)
+  , consolidate	= require('consolidate')
+  , io = require('socket.io');
 
 //create server
-var app = express();
+var app = express()
+	, server = require('http').createServer(app)
+  , io = io.listen(server);
+
+io.configure(function () {
+  io.set('transports', ['websocket', 'flashsocket', 'xhr-polling']);
+  io.enable('log');
+});
 
 //setup express middleware
 app.configure(function(){
@@ -23,9 +31,12 @@ process.on('uncaughtException', function(err){
   process.exit(1);
 });
 
+// handle socket-io
+require('./socket-io-handler')(io);
+
 //import routes
 require('./routes')(app);
 
 //explode server
-app.listen(app.get('port'));
+server.listen(app.get('port'));
 console.log('server running on port ' + app.get('port'));

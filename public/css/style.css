@@ -390,6 +390,32 @@ header {
   height: 200px;
   background: #555; }
 
+.main-img img {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  position: relative;
+  -webkit-transition-property: width, height, top, left;
+  -moz-transition-property: width, height, top, left;
+  -o-transition-property: width, height, top, left;
+  transition-property: width, height, top, left;
+  -webkit-transition-duration: 0.3s;
+  -moz-transition-duration: 0.3s;
+  -o-transition-duration: 0.3s;
+  transition-duration: 0.3s; }
+  .main-img img.active {
+    box-shadow: 0 0 15px #EFEFEF; }
+  .main-img img:hover {
+    width: 180px;
+    height: 180px;
+    top: -35px;
+    left: -35px; }
+
+.main-img {
+  width: 110px;
+  height: 110px;
+  margin: 0 auto; }
+
 .first {
   margin: 60px auto 30px; }
 

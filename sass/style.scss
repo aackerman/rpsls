@@ -25,6 +25,32 @@ header {
 	
 }
 
+.main-img img {
+	width: 110px;
+	height: 110px;
+	border-radius: 50%;
+	position: relative;
+	@include transition-prop(width, height, top, left);
+	@include transition-duration(.3s);
+
+	&.active {
+		box-shadow: 0 0 15px #EFEFEF;
+	}
+
+	&:hover {
+		width: 180px;
+		height: 180px;
+		top: -35px;
+		left: -35px;
+	}
+}
+
+.main-img {
+	width: 110px;
+	height: 110px;
+	margin: 0 auto;
+}
+
 .first {
 	margin: 60px auto 30px;
 }

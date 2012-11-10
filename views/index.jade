@@ -1,19 +1,22 @@
 extends layout
 
 block content
-	header.row 
-		h1 Rock, Paper, Scissors, Lizard, Spock
 	div.row.relative
 		div.row.first.center
-			div.scissors
+			div.main-img.scissors
 				img(src="/img/scissors.png")
 		div.row.second
-			div.lfloat
+			div.main-img.lfloat
 				img(src="/img/spock.png")
-			div.rfloat
+			div.main-img.rfloat
 				img(src="/img/paper.png")
 		div.row.third
-			div.lfloat
+			div.main-img.lfloat
 				img(src="/img/lizard.png")
-			div.rfloat
+			div.main-img.rfloat
 					img(src="/img/rock.png")
+	div.row
+		p Chat
+		div#chat
+		div.chat-input
+			input(type='text', name='chat')
