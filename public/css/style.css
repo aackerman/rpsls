@@ -434,6 +434,9 @@ input[type=password] {
 body {
   color: #fff;
   background-image: url(/img/bg.png); }
+  @media (max-width: 480px) {
+    body {
+      padding: 0 20px; } }
 
 p {
   margin-top: 0;
@@ -539,7 +542,7 @@ header {
   padding: 10px;
   border: 1px solid #DDD;
   border-bottom: solid 1px #CCC;
-  border-radius: 6px;
+  border-radius: 3px;
   background: #FEFEFE;
   filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0 startColorstr='#FFEFEFEF', endColorstr='#FFD5D5D5');
   background-image: -o-linear-gradient(top, #efefef 0, #d5d5d5 100%);

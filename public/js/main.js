@@ -1,7 +1,31 @@
 $(document).ready(function(){
 
 	var player = {
-		selection: {}
+		selection: ''
+	};
+
+	var bot = {
+		selection: ''
+	};
+
+	var options = [
+			'rock'
+		, 'lizard'
+		, 'spock'
+		, 'scissors'
+		, 'paper'
+	];
+
+	var gm = {
+		'rock': ['scissors', 'lizard'],
+		'lizard': ['spock', 'paper'],
+		'spock': ['scissors', 'rock'],
+		'scissors': ['paper', 'lizard'],
+		'paper': ['rock', 'spock']
+	};
+
+	var resolveBot = function(){
+
 	};
 
 	var socket = io.connect();
@@ -57,6 +81,7 @@ $(document).ready(function(){
 	});
 
 	$('.lock-btn').on('click', function(e){
-
+		player.selection = $('img.active').attr('data-selection');
+		resolveBot();
 	});
 });

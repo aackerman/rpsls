@@ -12,6 +12,10 @@ body {
 	color: #fff;
 	//background: #585D95;
 	background-image: url(/img/bg.png);
+
+	@media (max-width: 480px) {
+		padding: 0 20px;
+	}
 }
 
 p {
@@ -98,7 +102,7 @@ header {
 	padding: 10px;
   border: 1px solid #DDD;
 	border-bottom: solid 1px #CCC;
-	border-radius: 6px;
+	border-radius: 3px;
 	background: #FEFEFE;
 	@include background-gradient(#EFEFEF, darken(#EFEFEF, 10%));
 	@include box-shadow(0 1px 0 rgba(0,0,0,.3));
