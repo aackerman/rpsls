@@ -10,7 +10,7 @@ var app = express()
   , io = io.listen(server);
 
 io.configure(function () {
-  io.set('transports', ['websocket', 'flashsocket', 'xhr-polling']);
+  io.set('transports', ['websocket', 'xhr-polling']);
   io.enable('log');
 });
 

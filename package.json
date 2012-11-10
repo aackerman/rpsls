@@ -1,6 +1,6 @@
 {
   "name": "nko3-shadowlamp",
-  "version": "0.0.1-7",
+  "version": "0.0.1-8",
   "description": "Shadowlamp",
   "main": "server.js",
   "scripts": {
