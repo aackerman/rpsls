@@ -1,7 +1,29 @@
-var http = require('http');
-http.createServer(function (req, res) {
-  res.writeHead(200, {'Content-Type': 'text/plain'});
-  res.end('Hello World\n');
-}).listen(8000);
+//import modules
+var express     = require('express'),
+    RedisStore  = require('connect-redis')(express),
+    consolidate	= require('consolidate');
 
-console.log('Server running at http://0.0.0.0:8000/');
+//create server
+var app = express();
+
+//setup express middleware
+app.configure(function(){
+  app.use(express.bodyParser());
+  app.use(express.cookieParser());
+  app.use(express.session({secret: 'haxzorz'}));
+  app.set('views', __dirname + '/views');
+  app.set('view engine', 'jade');
+});
+
+process.on('uncaughtException', function(err){
+  console.error(err);
+  console.error(err.stack);
+  process.exit(1);
+});
+
+//import routes
+require('./routes')(app);
+
+//explode server
+app.listen(8080);
+console.log('server running on port 8080');
