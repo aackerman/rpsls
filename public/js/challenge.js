@@ -14,7 +14,7 @@ define([
 		this.socket = socket;
 		utils.eventDelegation.call(this);
 		utils.socketEventDelegation.call(this);
-		this.setChallenger(this.bot.getName());
+		this.setupBot();
 	};
 
 	Challenge.prototype = {
@@ -25,12 +25,13 @@ define([
 		},
 
 		socketEvents: {
-			'/challenge/accept' : 'acceptance',
-			'/challenge/reject' : 'rejection',
-			'/challenge/receive': 'receive',
-			'/challenge/win'		: 'win',
-			'/challenge/lose'		: 'lose',
-			'/challenge/tie'		: 'tie'
+			'/challenge/accept'		: 'acceptance',
+			'/challenge/reject'		: 'rejection',
+			'/challenge/receive'	: 'receive',
+			'/challenge/selection': 'notify',
+			'/challenge/win'			: 'win',
+			'/challenge/lose'			: 'lose',
+			'/challenge/tie'			: 'tie'
 		},
 
 		bot: {
@@ -176,6 +177,10 @@ define([
 			utils.timer.start();
 		},
 
+		notify: function() {
+			$('.info-box').html(pstore.challenger.nick + ' has made a selection.');
+		},
+
 		// handle another user accepting our challenge
 		acceptance: function(challenger) {
 			pstore.challenger = challenger;
@@ -233,6 +238,10 @@ define([
 			socket.emit('/challenge/send', originatorId, recipientId);
 		},
 
+		setupBot: function(){
+			this.setChallenger(this.bot.getName());
+		},
+
 		// handle when a user takes too long to decide
 		challengeTimeout: function() {
 			utils.message('Timeout!', 5);
@@ -240,6 +249,7 @@ define([
 
 		// cleanup
 		cleanup: function() {
+			$('.info-box').empty();
 			utils.timer.reset();
 		},
 

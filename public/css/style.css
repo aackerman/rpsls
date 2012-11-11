@@ -684,6 +684,7 @@ header {
   .module-box input {
     width: 100%; }
 
+.info-box,
 .challenger,
 .audio-check {
   height: 30px;

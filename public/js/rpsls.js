@@ -3,7 +3,6 @@ define([
 	'socket',
 	'pstore',
 	'utils',
-	'chat',
 	'challenge',
 	'mq'
 ], function(
@@ -11,15 +10,11 @@ define([
 	socket,
 	pstore,
 	utils,
-	chat,
-	challenge,
-	MQ
+	challenge
 ){
 	var self;
 	var RPSLS = function() {
 		this.$el = $('body');
-		this.chat = chat;
-		this.mq = MQ;
 		this.audio = {};
 		this.challenge = challenge;
 		this.socket = socket;
@@ -56,6 +51,7 @@ define([
 
 		quickstart: function(e) {
 			$('.startup').hide();
+			$('.info-box').empty();
 			$('.quick-nick').fadeIn();
 		},
 
@@ -84,18 +80,19 @@ define([
 			$('.no-players').remove();
 			console.log('add player', p);
 			pstore[p.id] = p;
-			var tpl = _.template('<div class="row player-row" data-id="<%= id%>"><div class="align-middle"></div><%= nick%>', p);
+			var tpl = _.template('<div class="row player-row" data-id="<%= id%>"><div class="align-middle"></div><%- nick%>', p);
 					tpl += _.template('<button class="btn rfloat challenge" data-id="<%= id%>">Challenge</button></div>', p);
 			$('#players').append(tpl);
 		},
 
 		nickname: function(e){
 			var nick = self.$nickname.val();
+			nick = _.escape(nick);
 			if(e.which == 13 && nick.length) {
 				console.log('set nickname');
 				$('.quick-nick').hide();
 				$('.info-output').fadeIn();
-				this.$('.nameplate').prepend('<span>'+nick+'</span>');
+				this.$('.nameplate').prepend(_.template('<span><%= nick%></span>',{nick: nick}));
 				socket.emit('/entrance', nick);
 			}
 		},
@@ -119,6 +116,10 @@ define([
 
 		removeplayer: function(p) {
 			console.log(p);
+			if(p.id == pstore.challenger.id) {
+				this.challenge.setupBot();
+				utils.message(pstore.challenger.nick + ' left your game', 3);
+			}
 			delete pstore[p.id];
 			$('[data-id='+p.id+']').remove();
 		}

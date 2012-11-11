@@ -140,6 +140,8 @@ module.exports = function(io) {
 						sockets[recipientId].emit('/challenge/win', result.message);
 						sockets[originatorId].emit('/challenge/lose', result.message);
 					}
+				} else {
+					sockets[recipientId].emit('/challenge/selection');
 				}
 				// wait for the other user to resolve if we don't have their selection
 			} else {
