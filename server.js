@@ -13,11 +13,7 @@ ioserver.configure(function () {
   ioserver.enable('log');
 });
 
-ioserver.set('store', new socketio.RedisStore({
-  redisPub: redis.createClient(),
-  redisSub: redis.createClient(),
-  redisClient: redis.createClient()
-}));
+require('./redis-setup')(ioserver);
 
 //setup express middleware
 app.configure(function(){
