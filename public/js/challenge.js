@@ -144,6 +144,7 @@ define([
 				p2.selection = p2.options[_.random(0, 4)];
 				this.resolve(p1, p2);
 			} else {
+				console.log(p1, p2);
 				socket.emit('/selection/send', p1.id, p2.id, p1.selection);
 			}
 		},
