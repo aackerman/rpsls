@@ -11,9 +11,9 @@ define([
 ){
 	var Challenge = function() {
 		this.$el = $('.challenge-container');
-		this.player = this.dplayer;
-		this.challenger = this.bot;
+		this.socket = socket;
 		utils.eventDelegation.call(this);
+		utils.socketEventDelegation.call(this);
 	};
 
 	Challenge.prototype = {
@@ -23,10 +23,13 @@ define([
 			'.lock-btn click': 'lockin'
 		},
 
-		dplayer: {
-			nick: 'Ron',
-			type: 'self',
-			selection: ''
+		socketEvents: {
+			'/challenge/accept': 'acceptance',
+			'/challenge/reject': 'rejection',
+			'/challenge/receive': 'receive',
+			'/challenge/win': 'win',
+			'/challenge/lose': 'lose',
+			'/challenge/tie': 'tie'
 		},
 
 		bot: {
@@ -64,16 +67,16 @@ define([
 		},
 
 		lockin: function(e) {
-			var p1 = pstore.player || this.player;
-			var p2 = this.challenger;
+			var p1 = pstore.player;
+			var p2 = pstore.challenger;
 			p1.selection = $('.selection-img.active').attr('data-selection');
 			console.log('lock in selection', p1.selection);
 			if(p2.type == 'bot') {
 				p2.selection = p2.options[_.random(0, 4)];
+				this.resolve(p1, p2);
 			} else {
-
+				socket.emit('/selection/send', p1.id, p2.id, p1.selection);
 			}
-			this.resolve(p1, p2);
 		},
 
 		resolve: function(p1, p2) {
@@ -94,23 +97,63 @@ define([
 			}
 		},
 
-		receive: function(player) {
-			console.log(player, pstore, pstore[player]);
-			this.challenger = pstore[player];
-			console.log('recieve challenge', this.challenger);
-			utils.message(this.challenger.nick + ' is challenging you. <span class="timer">30s</span><p class="center"><button class="btn">Accept</button><button class="btn reject">Reject</button></p>');
+		// receive player information from the challenger
+		receive: function(challenger) {
+			// set the challenger
+			pstore.challenger = pstore[challenger.id];
+			console.log('recieve challenge', pstore.challenger);
+
+			// create a message to accept or reject the challenge
+			utils.message(pstore.challenger.nick + ' is challenging you. <span class="timer">30s</span><p class="center"><button class="btn accept">Accept</button><button class="btn reject">Ignore</button></p>');
 		},
 
-		outcome: function() {
+		acceptance: function(challenger) {
+			pstore.challenger = challenger;
+			$('.challenger').html('<p>Playing against '+pstore.challenger.nick+'</p>');
+		},
 
+		acceptChallenge: function() {
+			var recipientId = pstore.challenger.id;
+			var originatorId = pstore.player.id;
+			// send accept message to challenger from player
+			socket.emit('/challenge/accept', originatorId, recipientId);
+			$('.challenger').html('<p>Playing against '+pstore.challenger.nick+'</p>');
+		},
+
+		rejection: function(rejector) {
+			console.log('challenge ignored from', rejector);
+		},
+
+		rejectChallenge: function() {
+			var recipientId = pstore.challenger.id;
+			var originatorId = pstore.player.id;
+			socket.emit('/challenge/reject', pstore.player);
 		},
 
 		send: function(e) {
-			var player = $(e.currentTarget).attr('data-id');
-			console.log('challenge sent to' + player);
-			socket.emit('/challenge/send', player);
+			var recipientId = $(e.currentTarget).attr('data-id');
+			var originatorId = pstore.player.id;
+			console.log('challenge sent to' + recipientId + ' from ' + pstore.player.nick);
+			// send challenge from our player id to their player id
+			socket.emit('/challenge/send', originatorId, recipientId);
+		},
+
+		win: function() {
+			console.log('you win');
+		},
+
+		lose: function() {
+			console.log('you lost');
+		},
+
+		tie: function() {
+			console.log('you tied');
+		},
+
+		reset: function() {
+
 		}
 	};
 
-	return Challenge;
+	return new Challenge();
 });

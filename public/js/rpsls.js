@@ -12,7 +12,7 @@ define([
 	pstore,
 	utils,
 	chat,
-	Challenge,
+	challenge,
 	MQ
 ){
 	var self;
@@ -20,7 +20,7 @@ define([
 		this.$el = $('body');
 		this.chat = chat;
 		this.mq = MQ;
-		this.challenge = new Challenge();
+		this.challenge = challenge;
 		this.socket = socket;
 		utils.eventDelegation.call(this);
 		utils.socketEventDelegation.call(this);
@@ -40,9 +40,7 @@ define([
 			'/players': 'bootstrap',
 			'/update/chat': 'chatupdate',
 			'/add/player': 'addplayer',
-			'/remove/player': 'removeplayer',
-			'/challenge/response': 'challengeoutcome',
-			'/challenge/receive': 'challengereceive'
+			'/remove/player': 'removeplayer'
 		},
 
 		$: function(selector){
@@ -62,15 +60,8 @@ define([
 		},
 
 		challengesend: function(e) {
+			console.log('send challenge from click');
 			this.challenge.send(e);
-		},
-
-		challengeoutcome: function(outcome) {
-			this.challenge.outcome(outcome);
-		},
-
-		challengereceive: function(user) {
-			this.challenge.receive(user);
 		},
 
 		bootstrap: function(players){
@@ -82,6 +73,7 @@ define([
 
 		setself: function(player) {
 			pstore.player = player;
+			console.log('setself');
 		},
 
 		addplayer: function(p) {

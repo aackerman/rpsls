@@ -1,9 +1,15 @@
 define([
 	'jquery',
-	'utils'
+	'utils',
+	'socket',
+	'pstore',
+	'challenge'
 ], function(
 	$,
-	utils
+	utils,
+	socket,
+	pstore,
+	challenge
 ){
 	var MQ = function() {
 		this.$el = $('.message-queue');
@@ -17,11 +23,13 @@ define([
 			'.reject click': 'reject'
 		},
 
-		accept: function() {
-
+		accept: function(e) {
+			challenge.acceptChallenge();
+			$(e.currentTarget).parents('.message').hide();
 		},
 		
 		reject: function(e){
+			challenge.rejectChallenge();
 			$(e.currentTarget).parents('.message').hide();
 		}
 	};
