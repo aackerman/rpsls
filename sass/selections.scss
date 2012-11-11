@@ -1,0 +1,33 @@
+.first {
+	@media (min-width: 480px) {
+		margin: 20px auto -30px;
+	}
+
+	@media (max-width: 480px) {
+		margin: 20px auto -30px;
+	}
+}
+
+.second {
+	@media (min-width: 480px) {
+		width: 360px;
+		margin: 0 auto 30px;
+	}
+
+	@media (max-width: 480px) {
+		width: 300px;
+		margin: 0 auto;
+	}
+}
+
+.third {
+	@media (min-width: 480px) {
+		width: 280px;
+		margin: 30px auto 30px;
+	}
+
+	@media (max-width: 480px) {
+		width: 230px;
+		margin: 0 auto 10px;
+	}
+}

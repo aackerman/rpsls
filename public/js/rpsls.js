@@ -90,7 +90,7 @@ define([
 				console.log('set nickname');
 				$('.quick-nick').hide();
 				$('.info-output').fadeIn();
-				this.$('.nickname').html(nick);
+				this.$('.nameplate').html(nick);
 				socket.emit('/entrance', nick);
 			}
 		},

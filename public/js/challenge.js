@@ -14,6 +14,7 @@ define([
 		this.socket = socket;
 		utils.eventDelegation.call(this);
 		utils.socketEventDelegation.call(this);
+		this.setChallenger(this.bot.getName());
 	};
 
 	Challenge.prototype = {
@@ -42,7 +43,27 @@ define([
 				, 'spock'
 				, 'scissors'
 				, 'paper'
-			]
+			],
+			getName: function(){
+				var names = [
+						'All-knowing Bot'
+					, 'Bending Bot'
+					, 'Pointy-ears Bot'
+					, 'Laser Bot'
+					, 'Beer Bot'
+					, 'Can-opener Bot'
+					, 'Cat Bot'
+					, 'Dog Bot'
+				];
+
+				return names[_.random(0, names.length - 1)];
+			}
+		},
+
+		def: {
+			nick: 'Player',
+			type: 'self',
+			selection: ''
 		},
 
 		outcomes : {
@@ -63,14 +84,15 @@ define([
 
 			$('.selection-img.active').removeClass('active');
 			$t.toggleClass('active');
-			$('.lock-btn').show().html(tpl);
+			$('.lock-btn').fadeIn().html(tpl);
 		},
 
 		lockin: function(e) {
-			var p1 = pstore.player;
-			var p2 = pstore.challenger;
+			var p1 = pstore.player || this.def;
+			var p2 = pstore.challenger || this.bot;
 			p1.selection = $('.selection-img.active').attr('data-selection');
 			console.log('lock in selection', p1.selection);
+			$('.lock-btn').fadeOut();
 			if(p2.type == 'bot') {
 				p2.selection = p2.options[_.random(0, 4)];
 				this.resolve(p1, p2);
@@ -84,15 +106,15 @@ define([
 			var ps2 = this.outcomes[p1.selection][1];
 			console.log(p1.nick + ' selected ' + p1.selection, p2.nick + ' selected ' + p2.selection);
 			if(p1.selection == p2.selection) {
-				console.log('Tie!');
+				this.tie();
 			} else {
 				if(
 					ps1 == p2.selection ||
 					ps2 == p2.selection
 				) {
-					console.log(p1.nick + ' wins!');
+					this.win();
 				} else {
-					console.log(p2.nick + ' wins!');
+					this.lose();
 				}
 			}
 		},
@@ -104,20 +126,32 @@ define([
 			console.log('recieve challenge', pstore.challenger);
 
 			// create a message to accept or reject the challenge
-			utils.message(pstore.challenger.nick + ' is challenging you. <span class="timer">30s</span><p class="center"><button class="btn accept">Accept</button><button class="btn reject">Ignore</button></p>');
+			var msg = '<p class="center">' + pstore.challenger.nick + ' is challenging you.</p><p class="center"><button class="btn accept">Accept</button><button class="btn reject">Ignore</button></p>';
+			utils.message(msg, 30);
+			utils.timer.start();
 		},
 
 		acceptance: function(challenger) {
 			pstore.challenger = challenger;
-			$('.challenger').html('<p>Playing against '+pstore.challenger.nick+'</p>');
+			utils.timer.start(60, this.challengeTimeout);
+			this.setChallenger(pstore.challenger.nick);
 		},
 
 		acceptChallenge: function() {
 			var recipientId = pstore.challenger.id;
 			var originatorId = pstore.player.id;
 			// send accept message to challenger from player
+			utils.timer.start(60, this.challengeTimeout);
 			socket.emit('/challenge/accept', originatorId, recipientId);
-			$('.challenger').html('<p>Playing against '+pstore.challenger.nick+'</p>');
+			this.setChallenger(pstore.challenger.nick);
+		},
+
+		setChallenger: function(name) {
+			$('.challenger').html('<p>Playing against '+name+'</p>');
+		},
+
+		setChallengeAttempt: function(name) {
+			$('.challenger').html('<p>Waiting for a challenge response from '+name+'</p>');
 		},
 
 		rejection: function(rejector) {
@@ -133,21 +167,40 @@ define([
 		send: function(e) {
 			var recipientId = $(e.currentTarget).attr('data-id');
 			var originatorId = pstore.player.id;
+			console.log(pstore, pstore[recipientId]);
+			var opponent = pstore[recipientId];
+
+			// logging
 			console.log('challenge sent to' + recipientId + ' from ' + pstore.player.nick);
+			
+			// don't allow the user to challenge other users
+			this.setChallengeAttempt(opponent.nick);
+			utils.timer.start();
+
 			// send challenge from our player id to their player id
 			socket.emit('/challenge/send', originatorId, recipientId);
 		},
 
+		challengeTimeout: function() {
+			utils.message('Timeout!', 5);
+		},
+
+		cleanup: function() {
+			utils.timer.reset();
+		},
+
 		win: function() {
+			utils.message('You win!', 3);
 			console.log('you win');
 		},
 
 		lose: function() {
+			utils.message('You lost!', 3);
 			console.log('you lost');
 		},
 
 		tie: function() {
-			console.log('you tied');
+			utils.message('You tied!', 3);
 		},
 
 		reset: function() {

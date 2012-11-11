@@ -63,14 +63,18 @@ module.exports = function(io) {
 			if(p1 && p2) {
 				p1.selection = selection;
 				if(p2.selection) {
+					// resolve returns either tie or the winning id
 					var result = resolve(p1, p2);
 					if(result == 'tie') {
+						// send both parties a tie response
 						sockets[originatorId].emit('/challenge/tie', selection);
 						sockets[recipientId].emit('/challenge/tie', selection);
 					} else if (result == originatorId) {
+						// send both parties a what happenend
 						sockets[originatorId].emit('/challenge/win', p2.selection);
 						sockets[recipientId].emit('/challenge/lose', p1.selection);
 					} else {
+						// send both parties a what happenend
 						sockets[recipientId].emit('/challenge/win', p1.selection);
 						sockets[originatorId].emit('/challenge/lose', p2.selection);
 					}

@@ -58,6 +58,28 @@
 	overflow: hidden;
 }
 
+.span-half {
+	float: left;
+	display: inline-block;
+	margin-left: 1%;
+	width: 49%;
+
+	&:first-child {
+		margin: 0;
+	}
+}
+
+.span-third {
+	float: left;
+	display: inline-block;
+	margin-left: 1%;
+	width: 32%;
+
+	&:first-child {
+		margin: 0;
+	}
+}
+
 .row,
 .container {
 	width: 100%;

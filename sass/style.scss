@@ -4,20 +4,8 @@
 @import 'message';
 @import 'overlay';
 @import 'utils';
-
-* {
-	@include box-sizing;
-}
-
-body {
-	color: #fff;
-	background-image: url(/img/bg2.png);
-}
-
-h1 {
-	margin-top: 0;
-	padding-top: 20px;
-}
+@import 'selections';
+@import 'base';
 
 .main-content {
 	padding: 20px;
@@ -26,7 +14,8 @@ h1 {
 
 .secondary-content {
 	margin: 0 auto;
-	padding: 20px;
+	padding-top: 20px;
+	min-height: 300px;
 	@media (min-width: 480px) {
 		width: 480px;
 	}
@@ -37,18 +26,28 @@ h1 {
 	@include background-gradient(#333, rgba(255, 255, 255, 0));
 }
 
-p {
-	margin-top: 0;
-	margin-bottom: 3px;
+.timer {
+	color: #EFEFEF;
+	font-size: 24px;
+	position: absolute;
+	bottom: 0;
+	right: 0;
 }
 
-header {
-	padding: 75px;
-	height: 200px;
-	background: #555;
+.info-output {
+	@media (min-width: 480px) {
+		width: 480px;
+		margin: 0 auto;
+	}
 }
 
-.main-img img {
+.nameplate {
+	font-weight: bold;
+	border-bottom: 2px solid #AAA;
+	margin-bottom: 10px;
+}
+
+.selection-img {
 	width: 110px;
 	height: 110px;
 	border-radius: 50%;
@@ -69,28 +68,6 @@ header {
 	}
 }
 
-.span-half {
-	float: left;
-	display: inline-block;
-	margin-left: 1%;
-	width: 49%;
-
-	&:first-child {
-		margin: 0;
-	}
-}
-
-.span-third {
-	float: left;
-	display: inline-block;
-	margin-left: 1%;
-	width: 32%;
-
-	&:first-child {
-		margin: 0;
-	}
-}
-
 .main-img {
 	width: 110px;
 	height: 110px;
@@ -99,7 +76,6 @@ header {
 }
 
 .module-box {
-	color: #333;
 	padding: 10px;
   border: 1px solid #CCC;
   margin-bottom: 10px;
@@ -112,7 +88,13 @@ header {
 	}
 }
 
+.challenger {
+	height: 36px;
+	color: #fff;
+}
+
 .player-row {
+	line-height: 24px;
 	margin-bottom: 10px;
 }
 
@@ -123,45 +105,5 @@ header {
 
 .selection {
 	height: 36px;
-}
-
-.info-output {
-	@media (min-width: 480px) {
-		width: 480px;
-		margin: 0 auto;
-	}
-}
-
-.first {
-	@media (min-width: 480px) {
-		margin: 20px auto 30px;
-	}
-
-	@media (max-width: 480px) {
-		margin: 20px auto -30px;
-	}
-}
-
-.second {
-	@media (min-width: 480px) {
-		width: 480px;
-		margin: 30px auto 90px;
-	}
-
-	@media (max-width: 480px) {
-		width: 300px;
-		margin: 0 auto;
-	}
-}
-
-.third {
-	@media (min-width: 480px) {
-		width: 360px;
-		margin: 60px auto 30px;
-	}
-
-	@media (max-width: 480px) {
-		width: 230px;
-		margin: 0 auto 30px;
-	}
+	margin-bottom: 10px;
 }

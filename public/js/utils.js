@@ -36,19 +36,46 @@ define([
 			}
 		},
 
-		message: function(msg) {
+		timer: {
+			time: 30,
+			$el: $('.timer'),
+			start: function(time, fn) {
+				var seconds = time || this.time;
+				var self = this;
+				this.reset();
+				this.$el.html(seconds + 's');
+				this.interval = setInterval(function(){
+					seconds--;
+					self.$el.html(seconds + 's');
+				}, 1000);
+				
+				this.timeout = setTimeout(function(){
+					clearInterval(self.interval);
+					self.$el.html('');
+					if(fn) fn();
+				}, seconds * 1000);
+			},
+			timeout: {},
+			interval: {},
+			reset: function() {
+				clearTimeout(this.timeout);
+				clearInterval(this.interval);
+				this.$el.html('');
+			}
+		},
+
+		message: function(msg, timeout) {
 			console.log('create message');
-			var seconds = 30;
-			var $msg = $('.message-queue').append('<div class="message">'+msg+'</div>');
-			var $timer = $msg.find('.timer');
-			var timeout = setInterval(function(){
-				seconds--;
-				$timer.html(seconds + 's');
-			}, 1000);
-			setTimeout(function(){
-				clearInterval(timeout);
-				$msg.remove();
-			}, 31000);
+			var $msg = $('<div class="message">'+msg+'</div>').appendTo('.message-queue');
+			if(timeout) {
+				setTimeout(function(){
+					$msg.fadeOut();
+					setTimeout(function(){
+						$msg.remove();
+					}, 500);
+				}, timeout * 1000);
+			}
+			return $msg;
 		}
 	};
 });
