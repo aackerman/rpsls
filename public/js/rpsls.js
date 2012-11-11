@@ -112,8 +112,12 @@ define([
 				this.challenge.setupBot();
 				utils.message(pstore.challenger.nick + ' left your game', 3);
 			}
+
 			delete pstore[p.id];
 			$('[data-id='+p.id+']').remove();
+			if(!$('.player-row').length) {
+				$('#players').append('<p class="no-players">No other players online</p>');
+			}
 		}
 
 	};
