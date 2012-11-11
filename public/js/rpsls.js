@@ -108,7 +108,7 @@ define([
 
 		removeplayer: function(p) {
 			console.log(p);
-			if(p.id == pstore.challenger.id) {
+			if(p.id && pstore.challenger && p.id == pstore.challenger.id) {
 				this.challenge.setupBot();
 				utils.message(pstore.challenger.nick + ' left your game', 3);
 			}
