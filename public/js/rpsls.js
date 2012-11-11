@@ -91,7 +91,7 @@ define([
 			if(e.which == 13 && nick.length) {
 				console.log('set nickname');
 				$('.quick-nick').hide();
-				$('.info-output').fadeIn();
+				$('.nameplate').fadeIn();
 				this.$('.nameplate').prepend(_.template('<span><%= nick%></span>',{nick: nick}));
 				socket.emit('/entrance', nick);
 			}
