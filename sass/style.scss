@@ -21,10 +21,40 @@
 	}
 }
 
-.audio-check {
+#rules {
+	color: #EFEFEF;
+	padding: 20px;
+	border-radius: 3px;
+	position: fixed;
+	top: 200px;
+	left: 50%;
+	margin-left: -160px;
+	width: 320px;
+	background: #222;
+	z-index: 9001;
+}
+
+.options-container {
 	position: absolute;
-	right: 0;
 	top: 0;
+	right: 0;
+	color: #fff;
+
+	ul {
+		padding: 0;
+		margin: 0;
+		list-style: none;
+	}
+
+	li {
+		background: #333;
+		display: inline-block;
+		padding: 10px 12px;
+
+		&:hover {
+			background: #222;
+		}
+	}
 }
 
 .content-flair {
@@ -66,9 +96,9 @@
 		width: 100%;
 	}
 }
-
-.challenger {
-	height: 36px;
+.challenger,
+.audio-check {
+	height: 30px;
 	color: #fff;
 }
 

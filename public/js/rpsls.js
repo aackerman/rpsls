@@ -34,7 +34,9 @@ define([
 			'.challenge click': 'challengesend',
 			'[name=nickname] keyup': 'nickname',
 			'.quick-start click': 'quickstart',
-			'.selection-img click': 'selectionsound'
+			'.selection-img click': 'selectionsound',
+			'.rules-option click': 'togglerules',
+			'.close-rules click': 'togglerules'
 		},
 
 		socketEvents: {
@@ -109,6 +111,10 @@ define([
 			} else {
 				this.audio[file].play();
 			}
+		},
+
+		togglerules: function() {
+			$('#rules').fadeToggle();
 		},
 
 		removeplayer: function(p) {

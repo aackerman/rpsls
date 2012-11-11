@@ -2,8 +2,31 @@ extends layout
 
 block content
 	div.main-content
+		div.options-container
+			ul.unstyled
+				li.option.audio-option
+					label(text='audio', for='use-audio') audio 
+					input#use-audio(type='checkbox', name='use-audio')
+				li.option.rules-option rules
 		h1.center Rock<br/>Paper Scissors<br/>Lizard Spock
 		div.message-queue
+		div#rules.hide
+			p Rock Paper Scissors Lizard Spock is a five-gesture expansion of the classic game Rock Paper Scissors.
+			p The rules are:
+			ul
+				li Scissors cuts paper
+				li Paper covers rock
+				li Rock crushes lizard
+				li Lizard poisons Spock
+				li Spock smashes scissors
+				li Scissors decapitates lizard
+				li Lizard eats paper
+				li Paper disproves Spock
+				li Spock vaporizes rock
+				li Rock crushes scissors
+			p Each of the options has two arrows pointing to the two other options they will defeat, for easy reference.
+			p We really recommend using the sweet audio.
+			button.rfloat.btn.close-rules close
 		div.challenge-container.row.relative
 			div.main-img.row.center
 				div.selection-container
@@ -15,7 +38,7 @@ block content
 					div.selection-img.lizard(data-selection='lizard')
 			div.selection.center
 				button.btn-large.hide.lock-btn Lock In
-			div.challenger.center
+			div.challenger.center					
 			div.timer	
 	div.content-flair
 	div.secondary-content
@@ -26,9 +49,5 @@ block content
 			input(type='text', name='nickname')
 		div.info-output.hide
 			div.row.nameplate
-				div.audio-check
-					label audio
-						input(type='checkbox', name='use-audio')
-
 			div#players.row.nbcf
 				p.no-players No other players online

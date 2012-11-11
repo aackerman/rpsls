@@ -382,6 +382,10 @@ input[type=password] {
     background-image: -moz-linear-gradient(top, #e6e6e6, #d5d5d5);
     background-image: linear-gradient(top, #e6e6e6, #d5d5d5); }
 
+.btn-md {
+  font-size: 14px;
+  padding: 6px 12px; }
+
 .btn-large {
   font-size: 16px;
   padding: 8px 16px; }
@@ -612,10 +616,33 @@ header {
     .secondary-content {
       width: 480px; } }
 
-.audio-check {
+#rules {
+  color: #EFEFEF;
+  padding: 20px;
+  border-radius: 3px;
+  position: fixed;
+  top: 200px;
+  left: 50%;
+  margin-left: -160px;
+  width: 320px;
+  background: #222;
+  z-index: 9001; }
+
+.options-container {
   position: absolute;
+  top: 0;
   right: 0;
-  top: 0; }
+  color: #fff; }
+  .options-container ul {
+    padding: 0;
+    margin: 0;
+    list-style: none; }
+  .options-container li {
+    background: #333;
+    display: inline-block;
+    padding: 10px 12px; }
+    .options-container li:hover {
+      background: #222; }
 
 .content-flair {
   height: 20px;
@@ -657,8 +684,9 @@ header {
   .module-box input {
     width: 100%; }
 
-.challenger {
-  height: 36px;
+.challenger,
+.audio-check {
+  height: 30px;
   color: #fff; }
 
 .player-row {
