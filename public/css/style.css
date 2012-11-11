@@ -512,6 +512,9 @@ input[type=password] {
   margin: 0 auto;
   position: relative; }
 
+.main-img {
+  margin-bottom: 20px; }
+
 .selection-img {
   width: 108px;
   height: 108px;
@@ -603,11 +606,16 @@ header {
 
 .secondary-content {
   margin: 0 auto;
-  padding-top: 20px;
+  padding: 20px;
   min-height: 300px; }
   @media (min-width: 480px) {
     .secondary-content {
       width: 480px; } }
+
+.audio-check {
+  position: absolute;
+  right: 0;
+  top: 0; }
 
 .content-flair {
   height: 20px;
@@ -632,6 +640,7 @@ header {
     margin: 0 auto; } }
 
 .nameplate {
+  position: relative;
   font-weight: bold;
   border-bottom: 2px solid #AAA;
   margin-bottom: 10px; }

@@ -79,6 +79,7 @@ define([
 		},
 
 		addplayer: function(p) {
+			$('.no-players').remove();
 			console.log('add player', p);
 			pstore[p.id] = p;
 			var tpl = _.template('<div class="row player-row" data-id="<%= id%>"><div class="align-middle"></div><%= nick%>', p);
@@ -92,16 +93,13 @@ define([
 				console.log('set nickname');
 				$('.quick-nick').hide();
 				$('.info-output').fadeIn();
-				this.$('.nameplate').html(nick);
+				this.$('.nameplate').prepend('<span>'+nick+'</span>');
 				socket.emit('/entrance', nick);
 			}
 		},
 
-		loadAudio: function() {
-
-		},
-
 		selectionsound: function(e) {
+			if(!$('[name=use-audio]').is(':checked')) return;
 			var file = $(e.currentTarget).attr('data-selection');
 			if(!this.audio[file]) {
 				this.audio[file] = new Audio();

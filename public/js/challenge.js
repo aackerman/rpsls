@@ -25,12 +25,12 @@ define([
 		},
 
 		socketEvents: {
-			'/challenge/accept': 'acceptance',
-			'/challenge/reject': 'rejection',
+			'/challenge/accept' : 'acceptance',
+			'/challenge/reject' : 'rejection',
 			'/challenge/receive': 'receive',
-			'/challenge/win': 'win',
-			'/challenge/lose': 'lose',
-			'/challenge/tie': 'tie'
+			'/challenge/win'		: 'win',
+			'/challenge/lose'		: 'lose',
+			'/challenge/tie'		: 'tie'
 		},
 
 		bot: {
@@ -50,7 +50,7 @@ define([
 					, 'Bending Bot'
 					, 'Pointy-ears Bot'
 					, 'Laser Bot'
-					, 'Beer Bot'
+					, 'Bear Bot'
 					, 'Can-opener Bot'
 					, 'Cat Bot'
 					, 'Dog Bot'
@@ -67,15 +67,60 @@ define([
 		},
 
 		outcomes : {
-			'rock': ['scissors', 'lizard'],
-			'lizard': ['spock', 'paper'],
-			'spock': ['scissors', 'rock'],
-			'scissors': ['paper', 'lizard'],
-			'paper': ['rock', 'spock']
+			'rock': {
+				'scissors': {
+					message: 'Rock crushes scissors!',
+					audio: 'rock-crushes-scissors'
+				},
+				'lizard': {
+					message: 'Rock crushes lizard!',
+					audio: 'rock-crushes-lizard'
+				}
+			},
+			'lizard': {
+				'spock': {
+					message: 'Lizard poisons Spock!',
+					audio: 'lizard-poisons-spock'
+				},
+				'paper': {
+					message: 'Lizard eats paper!',
+					audio: 'lizard-eats-paper'
+				}
+			},
+			'spock': {
+				'scissors': {
+					message: 'Spock smashes scissors!',
+					audio: 'spock-smashes-scissors'
+				},
+				'rock': {
+					message: 'Spock vaporizes rock!',
+					audio: 'spock-vaporizes-rock'
+				}
+			},
+			'scissors': {
+				'paper': {
+					message: 'Scissors cuts paper!',
+					audio: 'scissors-cuts-paper'
+				},
+				'lizard': {
+					message: 'Scissors decapitates lizard!',
+					audio: 'scissors-decapitates-lizard'
+				}
+			},
+			'paper': {
+				'rock': {
+					message: 'Paper covers rock!',
+					audio: 'paper-covers-rock'
+				},
+				'spock': {
+					message: 'Paper disproves Spock!',
+					ogg: 'paper-disproves-spock'
+				}
+			}
 		},
 
+		// user clicked on a selection
 		select: function(e) {
-			console.log(e);
 			var $t = $(e.currentTarget);
 			var selection = $t.attr('data-selection');
 			var tpl = _.template('Lock in <%= selection %>', {selection: selection});
@@ -87,6 +132,7 @@ define([
 			$('.lock-btn').fadeIn().html(tpl);
 		},
 
+		// user locked in a selection
 		lockin: function(e) {
 			var p1 = pstore.player || this.def;
 			var p2 = pstore.challenger || this.bot;
@@ -101,20 +147,19 @@ define([
 			}
 		},
 
+		// resolve client-side if the user is facing a bot
 		resolve: function(p1, p2) {
-			var ps1 = this.outcomes[p1.selection][0];
-			var ps2 = this.outcomes[p1.selection][1];
+			var outcome1 = this.outcomes[p1.selection];
+			var outcome2 = this.outcomes[p2.selection];
 			console.log(p1.nick + ' selected ' + p1.selection, p2.nick + ' selected ' + p2.selection);
 			if(p1.selection == p2.selection) {
 				this.tie();
 			} else {
-				if(
-					ps1 == p2.selection ||
-					ps2 == p2.selection
-				) {
-					this.win();
+				console.log(p2.selection, outcome1);
+				if(p2.selection in outcome1) {
+					this.win(outcome1[p2.selection].message);
 				} else {
-					this.lose();
+					this.lose(outcome2[p1.selection].message);
 				}
 			}
 		},
@@ -131,12 +176,14 @@ define([
 			utils.timer.start();
 		},
 
+		// handle another user accepting our challenge
 		acceptance: function(challenger) {
 			pstore.challenger = challenger;
 			utils.timer.start(60, this.challengeTimeout);
 			this.setChallenger(pstore.challenger.nick);
 		},
 
+		// tell another user we are accepting the challenger
 		acceptChallenge: function() {
 			var recipientId = pstore.challenger.id;
 			var originatorId = pstore.player.id;
@@ -146,24 +193,29 @@ define([
 			this.setChallenger(pstore.challenger.nick);
 		},
 
+		//set the name of the challenger
 		setChallenger: function(name) {
 			$('.challenger').html('<p>Playing against '+name+'</p>');
 		},
 
+		// let the user know they are still waiting for a response
 		setChallengeAttempt: function(name) {
 			$('.challenger').html('<p>Waiting for a challenge response from '+name+'</p>');
 		},
 
+		// handle rejection from another user
 		rejection: function(rejector) {
 			console.log('challenge ignored from', rejector);
 		},
 
+		// tell another user we are rejecting their challenge
 		rejectChallenge: function() {
 			var recipientId = pstore.challenger.id;
 			var originatorId = pstore.player.id;
 			socket.emit('/challenge/reject', pstore.player);
 		},
 
+		// send a challenge to another user
 		send: function(e) {
 			var recipientId = $(e.currentTarget).attr('data-id');
 			var originatorId = pstore.player.id;
@@ -181,33 +233,32 @@ define([
 			socket.emit('/challenge/send', originatorId, recipientId);
 		},
 
+		// handle when a user takes too long to decide
 		challengeTimeout: function() {
 			utils.message('Timeout!', 5);
 		},
 
+		// cleanup
 		cleanup: function() {
 			utils.timer.reset();
 		},
 
-		win: function() {
+		// tell the user the outcome
+		win: function(msg) {
 			this.cleanup();
-			utils.message('You win!', 3);
+			utils.message('You win! ' + msg, 3);
 			console.log('you win');
 		},
 
-		lose: function() {
+		lose: function(msg) {
 			this.cleanup();
-			utils.message('You lost!', 3);
+			utils.message('You lost! ' + msg, 3);
 			console.log('you lost');
 		},
 
 		tie: function() {
 			this.cleanup();
 			utils.message('You tied!', 3);
-		},
-
-		reset: function() {
-
 		}
 	};
 

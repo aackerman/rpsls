@@ -1,26 +1,77 @@
 var connections = {};
 
 var outcomes = {
-	'rock': ['scissors', 'lizard'],
-	'lizard': ['spock', 'paper'],
-	'spock': ['scissors', 'rock'],
-	'scissors': ['paper', 'lizard'],
-	'paper': ['rock', 'spock']
+	'rock': {
+		'scissors': {
+			message: 'Rock crushes scissors!',
+			audio: 'rock-crushes-scissors'
+		},
+		'lizard': {
+			message: 'Rock crushes lizard!',
+			audio: 'rock-crushes-lizard'
+		}
+	},
+	'lizard': {
+		'spock': {
+			message: 'Lizard poisons Spock!',
+			audio: 'lizard-poisons-spock'
+		},
+		'paper': {
+			message: 'Lizard eats paper!',
+			audio: 'lizard-eats-paper'
+		}
+	},
+	'spock': {
+		'scissors': {
+			message: 'Spock smashes scissors!',
+			audio: 'spock-smashes-scissors'
+		},
+		'rock': {
+			message: 'Spock vaporizes rock!',
+			audio: 'spock-vaporizes-rock'
+		}
+	},
+	'scissors': {
+		'paper': {
+			message: 'Scissors cuts paper!',
+			audio: 'scissors-cuts-paper'
+		},
+		'lizard': {
+			message: 'Scissors decapitates lizard!',
+			audio: 'scissors-decapitates-lizard'
+		}
+	},
+	'paper': {
+		'rock': {
+			message: 'Paper covers rock!',
+			audio: 'paper-covers-rock'
+		},
+		'spock': {
+			message: 'Paper disproves Spock!',
+			ogg: 'paper-disproves-spock'
+		}
+	}
 };
 
 var resolve = function(p1, p2) {
-	var ps1 = outcomes[p1.selection][0];
-	var ps2 = outcomes[p1.selection][1];
+	var outcome1 = outcomes[p1.selection];
+	var outcome2 = outcomes[p2.selection];
 	if(p1.selection == p2.selection) {
-		return 'tie';
+		return {
+			winner: false,
+			message: p1.selection + ' ties ' + p1.selection
+		};
 	} else {
-		if(
-			ps1 == p2.selection ||
-			ps2 == p2.selection
-		) {
-			return p1.id;
+		if(p2.selection in outcome1) {
+			return {
+				winner: p1.id,
+				message: outcome1[p2.selection].message
+			};
 		} else {
-			return p2.id;
+			return {
+				winner: p2.id,
+				message: outcome2[p1.selection].message
+			};
 		}
 	}
 };
@@ -58,25 +109,36 @@ module.exports = function(io) {
 
 		// send pick to the server
 		socket.on('/selection/send', function(originatorId, recipientId, selection){
+			// get references for both playesr
 			var p1 = connections[originatorId];
 			var p2 = connections[recipientId];
+
+			// make sure we have both players
 			if(p1 && p2) {
 				p1.selection = selection;
+
+				// only resolve if both players have made selections
 				if(p2.selection) {
 					// resolve returns either tie or the winning id
 					var result = resolve(p1, p2);
-					if(result == 'tie') {
+
+					// undefine both players selections
+					p1.selection = undefined;
+					p2.selection = undefined;
+
+					// send the results to both parties
+					if(!result.winner) {
 						// send both parties a tie response
 						sockets[originatorId].emit('/challenge/tie', selection);
 						sockets[recipientId].emit('/challenge/tie', selection);
-					} else if (result == originatorId) {
+					} else if (result.winner == originatorId) {
 						// send both parties a what happenend
-						sockets[originatorId].emit('/challenge/win', p2.selection);
-						sockets[recipientId].emit('/challenge/lose', p1.selection);
+						sockets[originatorId].emit('/challenge/win', result.message);
+						sockets[recipientId].emit('/challenge/lose', result.message);
 					} else {
 						// send both parties a what happenend
-						sockets[recipientId].emit('/challenge/win', p1.selection);
-						sockets[originatorId].emit('/challenge/lose', p2.selection);
+						sockets[recipientId].emit('/challenge/win', result.message);
+						sockets[originatorId].emit('/challenge/lose', result.message);
 					}
 				}
 				// wait for the other user to resolve if we don't have their selection

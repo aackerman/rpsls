@@ -5,7 +5,7 @@ block content
 		h1.center Rock<br/>Paper Scissors<br/>Lizard Spock
 		div.message-queue
 		div.challenge-container.row.relative
-			div.row.center
+			div.main-img.row.center
 				div.selection-container
 					img(src="/img/rpsls.png")
 					div.selection-img.rock(data-selection='rock')
@@ -20,16 +20,15 @@ block content
 	div.content-flair
 	div.secondary-content
 		div.startup.center
-			//button.btn-large.login-start Login with Twitter
 			button.btn-large.quick-start Quick Start
 		div.module-box.quick-nick.hide
 			p Nickname
 			input(type='text', name='nickname')
 		div.info-output.hide
-			//div.module-box.row.span-half.nbcf
-				p Smack Talk
-				div#chat
-				div.chat-input
-					input(type='text', name='chat')
 			div.row.nameplate
+				div.audio-check
+					label audio
+						input(type='checkbox', name='use-audio')
+
 			div#players.row.nbcf
+				p.no-players No other players online
