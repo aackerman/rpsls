@@ -1,6 +1,6 @@
 {
   "name": "nko3-shadowlamp",
-  "version": "0.0.2-5",
+  "version": "0.0.2-6",
   "description": "Shadowlamp",
   "main": "server.js",
   "scripts": {
@@ -20,5 +20,8 @@
   "engines": {
     "node": "0.8.x"
   },
-  "subdomain": "shadowlamp.nko3"
+  "subdomain": "shadowlamp.nko3",
+  "domains": [
+    "rock-paper-scissors-lizard-spock.net"
+  ]
 }
