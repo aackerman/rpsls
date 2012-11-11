@@ -98,16 +98,8 @@ define([
 		},
 
 		selectionsound: function(e) {
-			if(!$('[name=use-audio]').is(':checked')) return;
 			var file = $(e.currentTarget).attr('data-selection');
-			if(!this.audio[file]) {
-				this.audio[file] = new Audio();
-				this.audio[file].src = '/audio/ogg/' + file + '.ogg';
-				this.audio[file].load();
-				this.audio[file].play();
-			} else {
-				this.audio[file].play();
-			}
+			utils.audio.play(file);
 		},
 
 		togglerules: function() {

@@ -644,6 +644,11 @@ header {
     .options-container li:hover {
       background: #222; }
 
+.voting {
+  position: absolute;
+  bottom: 20px;
+  left: 20px; }
+
 .content-flair {
   height: 20px;
   filter: progid:DXImageTransform.Microsoft.gradient(gradientType=0 startColorstr='#FF333333', endColorstr='#00FFFFFF');

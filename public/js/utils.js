@@ -4,6 +4,39 @@ define([
 	$
 ){
 	return {
+		audio: {
+			cache: {},
+			enabled: function(){
+				return $('[name=use-audio]').is(':checked');
+			},
+			cachesound: function(sound){
+				if(!this.cache[sound]) {
+					this.cache[sound] = new Audio();
+					this.cache[sound].src = '/audio/' + this.format + '/' + sound + '.' + this.format;
+				}
+				return this.cache[sound];
+			},
+			format: (new Audio().canPlayType('audio/mp3') ? 'mp3' : 'ogg'),
+			play: function(sound) {
+				sound = this.cachesound(sound);
+				if(!this.enabled()) return;
+				sound.play();
+			},
+			sequence: function(sound1, sound2) {
+				var s1 = this.cachesound(sound1);
+				var s2 = this.cachesound(sound2);
+
+				if(!this.enabled()) return;
+
+				// play audio in sequence
+				s1.play();
+				$(s1).on('ended', function(){
+					s2.play();
+					$(s1).off('ended');
+				});
+			}
+		},
+
 		eventDelegation: function() {
 			if(!this.$el) throw new Error('Module requires an $el prop to delegate events');
 			var events = this.events;
