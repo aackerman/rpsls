@@ -5,19 +5,14 @@ block content
 		h1.center Rock<br/>Paper Scissors<br/>Lizard Spock
 		div.message-queue
 		div.challenge-container.row.relative
-			div.row.first.center
-				div.main-img.scissors
-					img.selection-img(src="/img/scissors.png", data-selection='scissors')
-			div.row.second
-				div.main-img.lfloat
-					img.selection-img(src="/img/spock.png", data-selection='spock')
-				div.main-img.rfloat
-					img.selection-img(src="/img/paper.png", data-selection='paper')
-			div.row.third
-				div.main-img.lfloat
-					img.selection-img(src="/img/lizard.png", data-selection='lizard')
-				div.main-img.rfloat
-					img.selection-img(src="/img/rock.png", data-selection='rock')
+			div.row.center
+				div.selection-container
+					img(src="/img/rpsls.png")
+					div.selection-img.rock(data-selection='rock')
+					div.selection-img.scissors(data-selection='scissors')
+					div.selection-img.spock(data-selection='spock')
+					div.selection-img.paper(data-selection='paper')
+					div.selection-img.lizard(data-selection='lizard')
 			div.selection.center
 				button.btn-large.hide.lock-btn Lock In
 			div.challenger.center

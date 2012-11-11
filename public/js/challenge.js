@@ -190,16 +190,19 @@ define([
 		},
 
 		win: function() {
+			this.cleanup();
 			utils.message('You win!', 3);
 			console.log('you win');
 		},
 
 		lose: function() {
+			this.cleanup();
 			utils.message('You lost!', 3);
 			console.log('you lost');
 		},
 
 		tie: function() {
+			this.cleanup();
 			utils.message('You tied!', 3);
 		},
 

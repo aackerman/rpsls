@@ -20,6 +20,7 @@ define([
 		this.$el = $('body');
 		this.chat = chat;
 		this.mq = MQ;
+		this.audio = {};
 		this.challenge = challenge;
 		this.socket = socket;
 		utils.eventDelegation.call(this);
@@ -32,7 +33,8 @@ define([
 		events: {
 			'.challenge click': 'challengesend',
 			'[name=nickname] keyup': 'nickname',
-			'.quick-start click': 'quickstart'
+			'.quick-start click': 'quickstart',
+			'.selection-img click': 'selectionsound'
 		},
 
 		socketEvents: {
@@ -92,6 +94,22 @@ define([
 				$('.info-output').fadeIn();
 				this.$('.nameplate').html(nick);
 				socket.emit('/entrance', nick);
+			}
+		},
+
+		loadAudio: function() {
+
+		},
+
+		selectionsound: function(e) {
+			var file = $(e.currentTarget).attr('data-selection');
+			if(!this.audio[file]) {
+				this.audio[file] = new Audio();
+				this.audio[file].src = '/audio/ogg/' + file + '.ogg';
+				this.audio[file].load();
+				this.audio[file].play();
+			} else {
+				this.audio[file].play();
 			}
 		},
 

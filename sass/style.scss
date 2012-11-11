@@ -47,34 +47,6 @@
 	margin-bottom: 10px;
 }
 
-.selection-img {
-	width: 110px;
-	height: 110px;
-	border-radius: 50%;
-	position: relative;
-	@include transition-prop(width, height, top, left);
-	@include transition-duration(.3s);
-
-	&.active {
-		box-shadow: 0 0 15px #EFEFEF;
-	}
-
-	&:hover {
-		z-index: 1000;
-		width: 180px;
-		height: 180px;
-		top: -35px;
-		left: -35px;
-	}
-}
-
-.main-img {
-	width: 110px;
-	height: 110px;
-	margin: 0 auto;
-	display: inline-block;
-}
-
 .module-box {
 	padding: 10px;
   border: 1px solid #CCC;

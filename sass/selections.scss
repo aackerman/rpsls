@@ -1,3 +1,54 @@
+.selection-container {
+	width: 309px;
+	margin: 0 auto;
+	position: relative;
+}
+
+.selection-img {
+	width: 108px;
+	height: 108px;
+	border-radius: 50%;
+	position: absolute;
+	@include transition-prop(width, height, top, left);
+	@include transition-duration(.3s);
+
+	&.active {
+		box-shadow: 0 0 15px #EFEFEF;
+	}
+
+	&:hover {
+		box-shadow: 0 0 15px #EFEFEF;
+	}
+}
+
+
+.rock {
+	top: 2px;
+	left: 101px;
+}
+
+.paper {
+	top: 76px;
+	right: 1px;
+}
+
+.scissors {
+	bottom: 8px;
+	right: 36px;
+}
+
+.lizard {
+	bottom: 8px;
+	left: 39px;
+}
+
+.spock {
+	top: 76px;
+	left: 1px;
+}
+
+
+
 .first {
 	@media (min-width: 480px) {
 		margin: 20px auto -30px;
