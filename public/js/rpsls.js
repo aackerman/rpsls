@@ -36,6 +36,7 @@ define([
 		},
 
 		socketEvents: {
+			'/self': 'setself',
 			'/players': 'bootstrap',
 			'/update/chat': 'chatupdate',
 			'/add/player': 'addplayer',
@@ -79,6 +80,10 @@ define([
 			});
 		},
 
+		setself: function(player) {
+			pstore.player = player;
+		},
+
 		addplayer: function(p) {
 			console.log('add player', p);
 			pstore[p.id] = p;
@@ -93,8 +98,8 @@ define([
 				console.log('set nickname');
 				$('.quick-nick').hide();
 				$('.info-output').fadeIn();
-				self.$('.nickname').html(nick);
-				self.socket.emit('/entrance', nick);
+				this.$('.nickname').html(nick);
+				socket.emit('/entrance', nick);
 			}
 		},
 
