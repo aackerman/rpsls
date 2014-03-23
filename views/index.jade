@@ -4,9 +4,6 @@ block content
 	div.main-content
 		div.options-container
 			ul.unstyled
-				li.option.audio-option
-					label(text='audio', for='use-audio') audio 
-					input#use-audio(type='checkbox', name='use-audio')
 				li.option.rules-option rules
 		h1.center Rock<br/>Paper Scissors<br/>Lizard Spock
 		div.message-queue
@@ -25,7 +22,6 @@ block content
 				li Spock vaporizes rock
 				li Rock crushes scissors
 			p Each of the options has two arrows pointing to the two other options they will defeat, for easy reference.
-			p We really recommend using the sweet audio.
 			button.rfloat.btn.close-rules close
 		div.challenge-container.row.relative
 			div.main-img.row.center
@@ -41,11 +37,9 @@ block content
 			div.challenger.center
 			div.info-box.center
 				p Hit quick start and enter a name to challenge other players
-				p Use audio for more win!
-			div.timer	
+			div.timer
 	div.content-flair
 	div.secondary-content
-		iframe.voting(src='http://nodeknockout.com/iframe/shadowlamp', frameborder='0', scrolling='no', allowtransparency='true', width='115', height='25')
 		div.startup.center
 			button.btn-large.quick-start Quick Start
 		div.module-box.quick-nick.hide

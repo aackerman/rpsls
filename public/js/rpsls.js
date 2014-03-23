@@ -29,7 +29,6 @@ define([
 			'.challenge click': 'challengesend',
 			'[name=nickname] keyup': 'nickname',
 			'.quick-start click': 'quickstart',
-			'.selection-img click': 'selectionsound',
 			'.rules-option click': 'togglerules',
 			'.close-rules click': 'togglerules'
 		},
@@ -95,11 +94,6 @@ define([
 				this.$('.nameplate').prepend(_.template('<span><%= nick%></span>',{nick: nick}));
 				socket.emit('/entrance', nick);
 			}
-		},
-
-		selectionsound: function(e) {
-			var file = $(e.currentTarget).attr('data-selection');
-			utils.audio.play(file);
 		},
 
 		togglerules: function() {

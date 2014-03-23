@@ -230,7 +230,7 @@ define([
 
 			// logging
 			console.log('challenge sent to' + recipientId + ' from ' + pstore.player.nick);
-			
+
 			// don't allow the user to challenge other users
 			this.setChallengeAttempt(opponent.nick);
 			utils.timer.start();
@@ -258,7 +258,6 @@ define([
 		win: function(msg) {
 			this.cleanup();
 			var sound = msg.toLowerCase().replace(/\s/g, '-').replace('!', '');
-			utils.audio.sequence('win', sound);
 			utils.message('You win! ' + msg, 3);
 			console.log('you win');
 		},
@@ -266,14 +265,12 @@ define([
 		lose: function(msg) {
 			this.cleanup();
 			var sound = msg.toLowerCase().replace(/\s/g, '-').replace('!', '');
-			utils.audio.sequence('lose', sound);
 			utils.message('You lost! ' + msg, 3);
 			console.log('you lost');
 		},
 
 		tie: function() {
 			this.cleanup();
-			utils.audio.play('tie');
 			utils.message('You tied!', 3);
 		}
 	};
