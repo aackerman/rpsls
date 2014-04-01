@@ -1,12 +1,12 @@
-//import modules
-var express = require('express')
-  , redis = require('redis')
-  , socketio = require('socket.io');
+
+var express = require('express'),
+    redis = require('redis'),
+    socketio = require('socket.io');
 
 //create server
-var app = express()
-	, server = require('http').createServer(app)
-  , ioserver = socketio.listen(server);
+var app = express(),
+    server = require('http').createServer(app),
+    ioserver = socketio.listen(server);
 
 ioserver.configure(function () {
   ioserver.set('transports', ['websocket', 'xhr-polling']);
