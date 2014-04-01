@@ -1,14 +1,14 @@
 {
-  "name": "nko3-shadowlamp",
+  "name": "rpsls",
   "version": "0.0.3-4",
-  "description": "Shadowlamp",
+  "description": "rpsls",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
   "repository": {
     "type": "git",
-    "url": "git@github.com:nko3/shadowlamp.git"
+    "url": "git@github.com:aackerman/rpsls.git"
   },
   "dependencies": {
     "express": "~3.0.2",
@@ -19,9 +19,5 @@
   },
   "engines": {
     "node": "0.8.x"
-  },
-  "subdomain": "shadowlamp.nko3",
-  "domains": [
-    "rock-paper-scissors-lizard-spock.net"
-  ]
+  }
 }
