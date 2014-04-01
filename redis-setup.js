@@ -15,13 +15,9 @@ module.exports = function(ioserver) {
 		}));
 	};
 
-	var pub = redis.createClient(6379, 'nodejitsudb8585611132.redis.irstack.com');
-	var sub = redis.createClient(6379, 'nodejitsudb8585611132.redis.irstack.com');
-	var cli = redis.createClient(6379, 'nodejitsudb8585611132.redis.irstack.com');
-
-	pub.auth('nodejitsudb8585611132.redis.irstack.com:f327cfe980c971946e80b8e975fbebb4');
-	sub.auth('nodejitsudb8585611132.redis.irstack.com:f327cfe980c971946e80b8e975fbebb4');
-	cli.auth('nodejitsudb8585611132.redis.irstack.com:f327cfe980c971946e80b8e975fbebb4');
+	var pub = redis.createClient(6379, 'localhost');
+	var sub = redis.createClient(6379, 'localhost');
+	var cli = redis.createClient(6379, 'localhost');
 
 	pub.on('ready', function(){
 		ready.pub = 1;
